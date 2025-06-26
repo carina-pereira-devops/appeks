@@ -1,3 +1,4 @@
+# Variáveis vindas do Modulo Principal
 # Terraform sempre lê no diretório atual as variáveis
 variable "cidr_block" {
   type        = string
@@ -10,6 +11,7 @@ variable "project_name" {
   description = "Nome do Projeto"
 }
 
+# Ref locals.tf
 variable "tags" {
   type        = map(any)
   description = "Tags pertencentes aos recursos criados"

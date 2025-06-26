@@ -5,7 +5,7 @@ resource "aws_vpc" "eks_vpc" {
   # Função para adição de tags especificadas para Todos os recursos com as Tags específicas para cada recurso
   tags = merge(
     # Variáveis de identificação do Projeto na VPC (Todos os recursos)
-    local.tags,
+    var.tags,
     {
       # Variavel específica do recurso, como Nome 
       Name = "${var.project_name}-vpc"

@@ -1,3 +1,4 @@
+# Definição das variáveis
 variable "cidr_block" {
   type        = string
   description = "Range de IPs utilizado na VPC"

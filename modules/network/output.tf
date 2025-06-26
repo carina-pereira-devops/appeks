@@ -1,3 +1,4 @@
+# Informações que eu preciso exportar deste módulo para que outros módulos reutilizem
 output "subnet_pub_1a" {
   value = aws_subnet.eks_subnet_public_1a.id
 }
