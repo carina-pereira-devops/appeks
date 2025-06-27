@@ -31,3 +31,9 @@ module "eks_aws_load_balancer_controller" {
   cluster_name = module.eks_cluster.cluster_name
   vpc_id       = module.eks_network.vpc_id
 }
+
+module "grafana_prometheus_monitoring" {
+  source = "git::https://github.com/DNXLabs/terraform-aws-eks-grafana-prometheus.git"
+
+  enabled = true
+}
