@@ -61,8 +61,8 @@ jobs:
         - name: Update Kubernetes deployment manifest
           run: |
             grep -q "image: $ECR_REGISTRY/$ECR_REPOSITORY" iac_app/app/app.yaml \
-            && sed -i "s|image: $ECR_REGISTRY/$ECR_REPOSITORY:.*|image: $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }}|" iac_app/prd/app.yaml \
-            || echo "image: $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }}" >> iac_app/prd/app.yaml
+            && sed -i "s|image: $ECR_REGISTRY/$ECR_REPOSITORY:.*|image: $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }}|" iac_app/app/app.yaml \
+            || echo "image: $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }}" >> iac_app/app/app.yaml
 
 # Comitando e enviando a imagem para o repositório
         - name: Commit and push changes
