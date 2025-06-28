@@ -31,8 +31,11 @@ jobs:
       - name: Configure AWS credentials  # AWS
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::535002861869:role/github-carina-devops-pipe
-          role-session-name: GitHub_to_AWS_via_FederatedOIDC
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          # Forma correta de trabalha em prd, com roles
+          #role-to-assume: arn:aws:iam::535002861869:role/github-carina-devops-pipe
+          #role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: us-east-1
       - name: Read destroy configuration # Validação caso necessário deletar o ambiente
         id: read-destroy-config
