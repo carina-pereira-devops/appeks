@@ -53,7 +53,7 @@ jobs:
         if: steps.read-destroy-config.outputs.destroy != 'true' # Só executa quando a opção de destruição não for verdadeira
         id: terraform-plan
         run: cd iac_eks &&
-          terraform plan -out="prd.plan" -var-file="terraform.tfvars"
+          terraform plan -out="prd.plan" -var-file="iac_eks/terraform.tfvars"
       - name: Terraform Apply # Construção da infra de acordo com o planejamento por ambiente na etapa anterior 
         if: steps.read-destroy-config.outputs.destroy != 'true' # Só executa quando a opção de destruição não for verdadeira
         id: terraform-apply
