@@ -21,3 +21,5 @@ override.tf.json
 Notas.txt
 
 *.png
+
+./assets

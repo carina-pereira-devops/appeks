@@ -19,3 +19,4 @@ variable "tags" {
   type        = map(any)
   description = "Tags pertencentes aos recursos criados"
 }
+

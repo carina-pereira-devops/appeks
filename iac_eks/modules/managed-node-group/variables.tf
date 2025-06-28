@@ -16,7 +16,7 @@ variable "cluster_name" {
 
 variable "subnet_private_1a" {
   type        = string
-  description = "Subnet Pública AZ 1a"
+  description = "Subnet Privada AZ 1a"
 }
 
 variable "subnet_private_1b" {
