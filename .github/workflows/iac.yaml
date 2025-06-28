@@ -58,4 +58,4 @@ jobs:
         if: steps.read-destroy-config.outputs.destroy != 'true' # Só executa quando a opção de destruição não for verdadeira
         id: terraform-apply
         run: cd iac_eks &&
-          terraform apply
+          terraform apply -auto-approve
