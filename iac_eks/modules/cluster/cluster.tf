@@ -25,3 +25,9 @@ resource "aws_eks_cluster" "eks_cluster" {
     }
   )
 }
+
+resource "kubernetes_namespace" "app" {
+  metadata {
+    name = "Namespace para aplicação e monitoramento"
+  }
+}

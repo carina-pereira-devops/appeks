@@ -3,7 +3,7 @@ resource "helm_release" "prometheus" {
  repository = "https://prometheus-community.github.io/helm-charts"
  chart      = "prometheus"
  namespace = "app"
- create_namespace = true
+ #create_namespace = true
 
  set {
    name  = "server.service.type"

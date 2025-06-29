@@ -4,7 +4,7 @@ resource "helm_release" "grafana" {
  chart      = "grafana"
  namespace  = "app"
 
- create_namespace = true
+ #create_namespace = true
 
  set {
    name  = "server.service.type"
