@@ -19,9 +19,9 @@ resource "helm_release" "prometheus" {
 }
 
 
-data "kubernetes_service" "prometheus_server" {
+data "kubernetes_service" "prometheus" {
  metadata {
-   name      = "prometheus-server"
-   namespace = helm_release.app.namespace
+   name      = "prometheus"
+   namespace = helm_release.prometheus.namespace
  }
 }

@@ -18,9 +18,9 @@ resource "helm_release" "grafana" {
 }
 
 
-data "kubernetes_service" "grafana_server" {
+data "kubernetes_service" "grafana" {
  metadata {
-   name      = "grafana-server"
-   namespace = helm_release.app.namespace
+   name      = "grafana"
+   namespace = helm_release.grafana.namespace
  }
 }
