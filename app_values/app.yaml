@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: python
-        image: 535002861869.dkr.ecr.us-east-1.amazonaws.com/dvps:20250629221602
+        image: 535002861869.dkr.ecr.us-east-1.amazonaws.com/dvps:20250629225810
         ports:
         - containerPort: 8000
 
@@ -34,5 +34,5 @@ spec:
     app: python
   ports:
     - protocol: TCP
-      port: 8000
-      targetPort: 8000
+      port: 5000
+      targetPort: 5000
