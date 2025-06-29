@@ -33,5 +33,5 @@ module "eks_aws_load_balancer_controller" {
 }
 
 module "waf" {
-  source       = "./modules/WAF"
+  source       = "./modules/waf"
 }
