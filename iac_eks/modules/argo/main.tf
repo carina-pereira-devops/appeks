@@ -1,9 +1,4 @@
-data "aws_eks_cluster_auth" "eks_cluster" {
- name = var.cluster.name
-}
-
 resource "helm_release" "argocd" {
- depends_on = [aws_eks_node_group.eks_managed_node_group]
  name       = "argocd"
  repository = "https://argoproj.github.io/argo-helm"
  chart      = "argo-cd"
