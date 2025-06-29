@@ -4,7 +4,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y python3.9 python3.9-dev pip
 
 # Configurando diretório atual para o diretório /app a ser executado no container
-COPY .app /app
+#COPY .app /app
 
 # Instalando dependências
 COPY requirements.txt /tmp/requirements.txt
