@@ -31,22 +31,3 @@ resource "kubernetes_namespace" "app" {
     name = "app"
   }
 }
-resource "kubernetes_persistent_volume" "app" {
-  metadata {
-    name = "app"
-  }
-  spec {
-    capacity = {
-      storage = "5Gi"
-    }
-    access_modes = ["ReadWriteMany"]
-    persistent_volume_source {
-      vsphere_volume {
-        volume_path = "/opt/"
-      }
-    }
-  }
-}
-
-# Validar se é necessário PVC, porque ele falha no Claim:
-# 

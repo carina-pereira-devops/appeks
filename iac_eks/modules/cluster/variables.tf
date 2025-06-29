@@ -18,3 +18,15 @@ variable "public_subnet_1b" {
   type        = string
   description = "Subnet Pública AZ 1b"
 }
+
+variable "az_a" {
+  type        = string
+  description = "AZ da Região"
+  default = "us-east-1a"
+}
+
+variable "az_b" {
+  type        = string
+  description = "AZ da Região"
+  default = "us-east-1b"
+}
