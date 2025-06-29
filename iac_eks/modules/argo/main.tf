@@ -1,5 +1,5 @@
 data "aws_eks_cluster_auth" "eks_cluster" {
- name = aws_eks_cluster.eks_cluster.name
+ name = var.cluster.name
 }
 
 resource "helm_release" "argocd" {

@@ -38,4 +38,6 @@ module "waf" {
 
 module "argo" {
   source       = "./modules/argo"
+  cluster_name = var.cluster.name
+
 }
