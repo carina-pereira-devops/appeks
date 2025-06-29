@@ -31,3 +31,34 @@ resource "kubernetes_namespace" "app" {
     name = "app"
   }
 }
+resource "kubernetes_persistent_volume" "app" {
+  metadata {
+    name = "app"
+  }
+  spec {
+    capacity = {
+      storage = "3Gi"
+    }
+    access_modes = ["ReadWriteMany"]
+    persistent_volume_source {
+      vsphere_volume {
+        volume_path = "/opt/"
+      }
+    }
+  }
+}
+
+resource "kubernetes_persistent_volume_claim" "app" {
+  metadata {
+    name = "app"
+  }
+  spec {
+    access_modes = ["ReadWriteMany"]
+    resources {
+      requests = {
+        storage = "2Gi"
+      }
+    }
+    volume_name = "${kubernetes_persistent_volume.app.metadata.0.name}"
+  }
+}
