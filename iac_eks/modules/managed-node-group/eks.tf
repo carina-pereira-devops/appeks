@@ -17,7 +17,7 @@ resource "aws_eks_node_group" "eks_managed_node_group" {
 # Argo consumindo muitos recursos, ajustar quantidade de máquinas? Refatorar código para especificar outra família de instâncias.
   scaling_config {
     desired_size = 2
-    max_size     = 3
+    max_size     = 5
     min_size     = 1
   }
 
