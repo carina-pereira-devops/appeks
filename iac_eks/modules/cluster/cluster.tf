@@ -37,7 +37,7 @@ resource "kubernetes_persistent_volume" "app" {
   }
   spec {
     capacity = {
-      storage = "3Gi"
+      storage = "5Gi"
     }
     access_modes = ["ReadWriteMany"]
     persistent_volume_source {
@@ -48,17 +48,5 @@ resource "kubernetes_persistent_volume" "app" {
   }
 }
 
-resource "kubernetes_persistent_volume_claim" "app" {
-  metadata {
-    name = "app"
-  }
-  spec {
-    access_modes = ["ReadWriteMany"]
-    resources {
-      requests = {
-        storage = "2Gi"
-      }
-    }
-    volume_name = "${kubernetes_persistent_volume.app.metadata.0.name}"
-  }
-}
+# Validar se é necessário PVC, porque ele falha no Claim:
+# 
