@@ -25,20 +25,3 @@ variable "tags" {
     "Time": "SRE"
   }
 }
-
-variable "web_acl_name" {
-    description = "Lista de Controle de Acesso APP Python"
-    default = "WAF Python"
-}
-variable "web_acl_description" {
-    description = "Bloqueia o acesso indevido a aplicação"
-    default = "ACL App Python"
-}
-variable "rule_name" {
-    description = "Bloqueia Ip específico"
-    default = block-ip
-}
-variable "rule_priority" {
-    description = "Prioridade da Regra"
-    default = 1
-}
