@@ -60,16 +60,16 @@ jobs:
 # Repo em sync com o Argo, Argo faz o rollout e sobe os Pods com a nova versão da imagem
         - name: Update Kubernetes deployment manifest
           run: |
-            grep -q "image: $ECR_REGISTRY/$ECR_REPOSITORY" iac_app/app/app.yaml \
-            && sed -i "s|image: $ECR_REGISTRY/$ECR_REPOSITORY:.*|image: $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }}|" iac_app/app/app.yaml \
-            || echo "image: $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }}" >> iac_app/app/app.yaml
+            grep -q "image: $ECR_REGISTRY/$ECR_REPOSITORY" app_values/app.yaml \
+            && sed -i "s|image: $ECR_REGISTRY/$ECR_REPOSITORY:.*|image: $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }}|" app_values/app.yaml \
+            || echo "image: $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }}" >> app_values/app.yaml
 
 # Comitando e enviando a imagem para o repositório
         - name: Commit and push changes
           run: |
             git config user.email "devops79@yahoo.com"
             git config user.name "carina-pereira-devops"
-            git remote set-url origin https://oauth2:$ACCESS_TOKEN@github.com/carina-pereira-devops/devops
+            git remote set-url origin https://oauth2:$ACCESS_TOKEN@github.com/carina-pereira-devops/appeks
             git add .
             git commit -m "Construção da Imagem com sucesso [skip ci]"
             git push
