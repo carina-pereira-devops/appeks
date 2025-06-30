@@ -1,3 +1,254 @@
+# Laboratório - Aplicação
+
+O mesmo consiste em uma aplicação em Python, com dois endpoints, nas respectivas portas:
+
+1 - Porta 8000/tcp
+Aplicação que recebe comentários em texto. Como a mesma não está disponibilizada através de um frontend as requisições serão feitas diretamente a API.
+Exemplos de uso:
+```
+# matéria 1
+curl -sv localhost:8000/api/comment/new -X POST -H 'Content-Type: application/json' -d '{"email":"alice@example.com","comment":"first post!","content_id":1}'
+curl -sv localhost:8000/api/comment/new -X POST -H 'Content-Type: application/json' -d '{"email":"alice@example.com","comment":"ok, now I am gonna say something more useful","content_id":1}'
+curl -sv localhost:8000/api/comment/new -X POST -H 'Content-Type: application/json' -d '{"email":"bob@example.com","comment":"I agree","content_id":1}'
+
+# matéria 2
+curl -sv localhost:8000/api/comment/new -X POST -H 'Content-Type: application/json' -d '{"email":"bob@example.com","comment":"I guess this is a good thing","content_id":2}'
+curl -sv localhost:8000/api/comment/new -X POST -H 'Content-Type: application/json' -d '{"email":"charlie@example.com","comment":"Indeed, dear Bob, I believe so as well","content_id":2}'
+curl -sv localhost:8000/api/comment/new -X POST -H 'Content-Type: application/json' -d '{"email":"eve@example.com","comment":"Nah, you both are wrong","content_id":2}'
+
+# listagem matéria 1
+curl -sv localhost:8000/api/comment/list/1
+
+# listagem matéria 2
+curl -sv localhost:8000/api/comment/list/2
+```
+
+Dados coletados durante o Laboratório:
+```
+[carina@fedora ekspp]$ curl -sv a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com:8000/api/comment/new -X POST -H 'Content-Type: application/json' -d '{"email":"alice@example.com","comment":"first post!","content_id":1}'
+* Host a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com:8000 was resolved.
+* IPv6: (none)
+* IPv4: 34.192.6.19, 35.168.80.67
+*   Trying 34.192.6.19:8000...
+* Connected to a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com (34.192.6.19) port 8000
+> POST /api/comment/new HTTP/1.1
+> Host: a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com:8000
+> User-Agent: curl/8.6.0
+> Accept: */*
+> Content-Type: application/json
+> Content-Length: 68
+> 
+* Empty reply from server
+* Closing connection
+
+[carina@fedora ekspp]$ curl -sv a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com:8000/api/comment/new -X POST -H 'Content-Type: application/json' -d '{"email":"alice@example.com","comment":"ok, now I am gonna say something more useful","content_id":1}'
+* Host a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com:8000 was resolved.
+* IPv6: (none)
+* IPv4: 34.192.6.19, 35.168.80.67
+*   Trying 34.192.6.19:8000...
+* Connected to a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com (34.192.6.19) port 8000
+> POST /api/comment/new HTTP/1.1
+> Host: a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com:8000
+> User-Agent: curl/8.6.0
+> Accept: */*
+> Content-Type: application/json
+> Content-Length: 101
+> 
+* Empty reply from server
+* Closing connection
+
+[carina@fedora ekspp]$ curl -sv a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com:8000/api/comment/new -X POST -H 'Content-Type: application/json' -d '{"email":"bob@example.com","comment":"I agree","content_id":1}'
+* Host a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com:8000 was resolved.
+* IPv6: (none)
+* IPv4: 34.192.6.19, 35.168.80.67
+*   Trying 34.192.6.19:8000...
+* Connected to a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com (34.192.6.19) port 8000
+> POST /api/comment/new HTTP/1.1
+> Host: a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com:8000
+> User-Agent: curl/8.6.0
+> Accept: */*
+> Content-Type: application/json
+> Content-Length: 62
+> 
+* Empty reply from server
+* Closing connection
+
+[carina@fedora ekspp]$ curl -sv a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com:8000/api/comment/new -X POST -H 'Content-Type: application/json' -d '{"email":"bob@example.com","comment":"I guess this is a good thing","content_id":2}'
+* Host a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com:8000 was resolved.
+* IPv6: (none)
+* IPv4: 34.192.6.19, 35.168.80.67
+*   Trying 34.192.6.19:8000...
+* Connected to a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com (34.192.6.19) port 8000
+> POST /api/comment/new HTTP/1.1
+> Host: a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com:8000
+> User-Agent: curl/8.6.0
+> Accept: */*
+> Content-Type: application/json
+> Content-Length: 83
+> 
+* Empty reply from server
+* Closing connection
+
+[carina@fedora ekspp]$ curl -sv a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com:8000/api/comment/new -X POST -H 'Content-Type: application/json' -d '{"email":"charlie@example.com","comment":"Indeed, dear Bob, I believe so as well","content_id":2}'
+* Host a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com:8000 was resolved.
+* IPv6: (none)
+* IPv4: 34.192.6.19, 35.168.80.67
+*   Trying 34.192.6.19:8000...
+* Connected to a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com (34.192.6.19) port 8000
+> POST /api/comment/new HTTP/1.1
+> Host: a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com:8000
+> User-Agent: curl/8.6.0
+> Accept: */*
+> Content-Type: application/json
+> Content-Length: 97
+> 
+* Empty reply from server
+* Closing connection
+
+[carina@fedora ekspp]$ curl -sv a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com:8000/api/comment/new -X POST -H 'Content-Type: application/json' -d '{"email":"eve@example.com","comment":"Nah, you both are wrong","content_id":2}'
+* Host a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com:8000 was resolved.
+* IPv6: (none)
+* IPv4: 34.192.6.19, 35.168.80.67
+*   Trying 34.192.6.19:8000...
+* Connected to a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com (34.192.6.19) port 8000
+> POST /api/comment/new HTTP/1.1
+> Host: a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com:8000
+> User-Agent: curl/8.6.0
+> Accept: */*
+> Content-Type: application/json
+> Content-Length: 78
+> 
+* Empty reply from server
+* Closing connection
+
+[carina@fedora ekspp]$ curl -sv a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com:8000/api/comment/list/1
+* Host a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com:8000 was resolved.
+* IPv6: (none)
+* IPv4: 34.192.6.19, 35.168.80.67
+*   Trying 34.192.6.19:8000...
+* Connected to a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com (34.192.6.19) port 8000
+> GET /api/comment/list/1 HTTP/1.1
+> Host: a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com:8000
+> User-Agent: curl/8.6.0
+> Accept: */*
+> 
+* Empty reply from server
+* Closing connection
+
+[carina@fedora ekspp]$ curl -sv a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com:8000/api/comment/list/2
+* Host a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com:8000 was resolved.
+* IPv6: (none)
+* IPv4: 34.192.6.19, 35.168.80.67
+*   Trying 34.192.6.19:8000...
+* Connected to a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com (34.192.6.19) port 8000
+> GET /api/comment/list/2 HTTP/1.1
+> Host: a814ceeca59784f9ca861a8bb40339fb-2090287217.us-east-1.elb.amazonaws.com:8000
+> User-Agent: curl/8.6.0
+> Accept: */*
+> 
+* Empty reply from server
+* Closing connection
+
+```
+
+2 - Porta 7000/tcp
+Aplicação envia métricas através do coletor do Prometheus.
+Exemplos de uso:
+```
+curl -v http://localhost:7000/metrics
+```
+
+Dados coletados durante o Laboratório:
+```
+*   Trying ::1:7000...
+* TCP_NODELAY set
+* connect to ::1 port 7000 failed: Connection refused
+*   Trying 127.0.0.1:7000...
+* TCP_NODELAY set
+* Connected to localhost (127.0.0.1) port 7000 (#0)
+> GET /metrics HTTP/1.1
+> Host: localhost:7000
+> User-Agent: curl/7.68.0
+> Accept: */*
+> 
+* Mark bundle as not supporting multiuse
+* HTTP 1.0, assume close after body
+< HTTP/1.0 200 OK
+< Date: Mon, 30 Jun 2025 01:41:21 GMT
+< Server: WSGIServer/0.2 CPython/3.8.10
+< Content-Type: text/plain; version=0.0.4; charset=utf-8
+< Content-Length: 2148
+< 
+# HELP python_gc_objects_collected_total Objects collected during gc
+# TYPE python_gc_objects_collected_total counter
+python_gc_objects_collected_total{generation="0"} 289.0
+python_gc_objects_collected_total{generation="1"} 107.0
+python_gc_objects_collected_total{generation="2"} 0.0
+# HELP python_gc_objects_uncollectable_total Uncollectable objects found during GC
+# TYPE python_gc_objects_uncollectable_total counter
+python_gc_objects_uncollectable_total{generation="0"} 0.0
+python_gc_objects_uncollectable_total{generation="1"} 0.0
+python_gc_objects_uncollectable_total{generation="2"} 0.0
+# HELP python_gc_collections_total Number of times this generation was collected
+# TYPE python_gc_collections_total counter
+python_gc_collections_total{generation="0"} 64.0
+python_gc_collections_total{generation="1"} 5.0
+python_gc_collections_total{generation="2"} 0.0
+# HELP python_info Python platform information
+# TYPE python_info gauge
+python_info{implementation="CPython",major="3",minor="8",patchlevel="10",version="3.8.10"} 1.0
+# HELP process_virtual_memory_bytes Virtual memory size in bytes.
+# TYPE process_virtual_memory_bytes gauge
+process_virtual_memory_bytes 1.88637184e+08
+# HELP process_resident_memory_bytes Resident memory size in bytes.
+# TYPE process_resident_memory_bytes gauge
+process_resident_memory_bytes 2.65216e+07
+# HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
+# TYPE process_start_time_seconds gauge
+process_start_time_seconds 1.75124752607e+09
+# HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
+# TYPE process_cpu_seconds_total counter
+process_cpu_seconds_total 0.2
+# HELP process_open_fds Number of open file descriptors.
+# TYPE process_open_fds gauge
+process_open_fds 6.0
+# HELP process_max_fds Maximum number of open file descriptors.
+# TYPE process_max_fds gauge
+process_max_fds 65536.0
+# HELP app_requests_total Total de requisições processadas
+# TYPE app_requests_total counter
+app_requests_total 320.0
+# HELP app_requests_created Total de requisições processadas
+# TYPE app_requests_created gauge
+app_requests_created 1.7512475265861325e+09
+* Closing connection 0
+```
+
+# Laboratório - CI_CD via Github Actions
+
+O código da aplicação, bem como as instruções são abstraídos em um Dockerfile:
+
+```
+FROM ubuntu:20.04
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y python3.9 python3.9-dev pip
+
+# Configurando diretório atual para o diretório /app a ser executado no container
+COPY ./app /app
+
+# Instalando dependências
+COPY requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
+
+# Expondo porta da aplicação
+EXPOSE 8000
+
+# Comando de Inicialização
+WORKDIR /app
+CMD cd /app;  python3 api.py 
+```
+
+
 # Sugestões:
 Traefik como ingress do kubernetes, instanciando apenas um LB, configurando as rotas para as demais requisições.
     ./prints/2.png
