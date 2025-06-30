@@ -15,4 +15,4 @@ EXPOSE 8000
 
 # Comando de Inicialização
 WORKDIR /app
-CMD cd /app; gunicorn --log-level debug api:app
+CMD cd /app;  python3 api.py 
