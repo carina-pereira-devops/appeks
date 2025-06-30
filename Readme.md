@@ -318,15 +318,11 @@ app_values/
 └── argo.yaml
 ```
 
-Abaixo o exemplo de sincronismo entre o Argo e o Git, durante o deploy de uma nova versão da aplicação:
-
-<img src="https://github.com/carina-pereira-devops/appeks/blob/4462cc0fdd9b533129da2abdfddf258e9ea436e3/prints/4.png" alt="ALB">
+Abaixo o exemplo de sincronismo entre o Argo e o Git, durante o deploy de uma nova versão da aplicação: <img src="https://github.com/carina-pereira-devops/appeks/blob/4462cc0fdd9b533129da2abdfddf258e9ea436e3/prints/4.png" alt="Argo">
 
 2 - A implementação do Prometheus Server que será feita via Helm manualmente.
 
-3 - A implementação do Grafana que será feita via Helm manualmente.
-
-    prints/8.png
+3 - A implementação do Grafana que será feita via Helm manualmente. <img src="https://github.com/carina-pereira-devops/appeks/blob/5187a309ae2575295dd71ab67dee32e64ef3ee8f/prints/8.png" alt="Grafana">
 
 # Validações:
 
