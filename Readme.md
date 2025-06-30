@@ -309,8 +309,6 @@ iac_eks/
 
 A imagem construída na etapa de CICD, será deploiada em um cluster EKS, no qual também terá as seguintes implementações:
 
-    prints/4.png
-
 1 - ArgoCD, tendo o Git como única fonte de verdade. Esta implementação é feita via Helm juntamente com o Terraform, sendo apenas a customização do recurso (argo.yaml) sendo feita manualmente. No mesmo diretório, teremos o artefato para a implementação da aplicação explanada na primeira etapa.
 
 ```
@@ -322,7 +320,7 @@ app_values/
 
 Abaixo o exemplo de sincronismo entre o Argo e o Git, durante o deploy de uma nova versão da aplicação:
 
-    prints/4.png
+<img src="https://github.com/carina-pereira-devops/appeks/blob/4462cc0fdd9b533129da2abdfddf258e9ea436e3/prints/4.png" alt="ALB">
 
 2 - A implementação do Prometheus Server que será feita via Helm manualmente.
 
