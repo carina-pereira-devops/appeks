@@ -338,7 +338,7 @@ ALB Controller é uma implementação via Helm que gerencia os ALBs.
 
     Quando um service do tipo LoadBalancer do Kubernetes expoẽ uma aplicação, automaticamente um LB é criado, e quando finaliza o LB é encerrado.
 
-    prints/1.png
+    https://github.com/carina-pereira-devops/appeks/blob/f612b311df911dd5f4fed51eb5a7d5c3c7089810/prints/1.png
 
 Detalhe sobe instância t3.medium (padrão na subida do cluster):
 
