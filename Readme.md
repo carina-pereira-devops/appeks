@@ -257,6 +257,8 @@ CMD cd /app;  python3 api.py
 
 Através da pipeline previamente configurada, disponibilizada no diretório padrão do Git .github/workflows, será criada uma imagem a ser armazanada em um repositório no ECR na AWS.
 
+Evidência do repositório: <img src="https://github.com/carina-pereira-devops/appeks/blob/868c5a1020d4e3830dfa9da034e00f1296823633/prints/5.png" alt="ECR">
+
 # Laboratório - Infra na AWS criada via Terraform
 
 Estrutura dos diretórios de acordo com este repositório, onde os recursos serão modularizados.
