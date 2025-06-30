@@ -20,7 +20,6 @@ override.tf.json
 *_override.tf.json
 Notas.txt
 
-*.png
 
 ./imagens
 ./recursos

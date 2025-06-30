@@ -12,6 +12,7 @@ Anotação para que o recurso seja utilizado:
 kubectl -n prometheus annotate ingress prometheus kubernetes.io/ingress.class=traefik
 ```
 Obs.: Embora tenha sido sugerida esta implementação, devido ao tempo disponibilizado, todos os serviços foram expostos através do ALB Controller.
+
 # Validações:
 ALB Controller é uma implementação via Helm que gerencia os ALBs.
     Semelhante ao Protocolo Arp que atua na camada 2,5 traduzindo Ip para MAC.
@@ -20,6 +21,49 @@ ALB Controller é uma implementação via Helm que gerencia os ALBs.
 
 Detalhe sobe instância t3.medium (padrão na subida do cluster):
     ./prints/3.png
+
+Foram coletadas métricas durante os testes, para justificativa de aumento ou redução dos recursos`
+
+Pods:
+```
+NAMESPACE     NAME                                                 CPU(cores)   MEMORY(bytes)   
+app           grafana-577575669d-rzcgr                             3m           77Mi            
+app           prometheus-kube-state-metrics-57d654d7bf-mv5l2       2m           15Mi            
+app           prometheus-prometheus-node-exporter-5kxhv            1m           3Mi             
+app           prometheus-prometheus-node-exporter-cj9m5            1m           3Mi             
+app           prometheus-prometheus-node-exporter-vkw9z            1m           3Mi             
+app           prometheus-prometheus-node-exporter-w6q5m            1m           3Mi             
+app           prometheus-prometheus-pushgateway-784c485d55-vrmsk   1m           6Mi             
+argocd        argocd-application-controller-0                      1m           25Mi            
+argocd        argocd-applicationset-controller-696b6668f-n4rfm     1m           21Mi            
+argocd        argocd-dex-server-c68dfbb6-qlwfg                     1m           19Mi            
+argocd        argocd-notifications-controller-f55767bc9-hglt9      1m           18Mi            
+argocd        argocd-redis-6465fc4f75-vp5b5                        2m           2Mi             
+argocd        argocd-repo-server-5c5cb94ff8-kshqs                  1m           21Mi            
+argocd        argocd-server-5c976fcf44-qpjnd                       2m           25Mi            
+kube-system   aws-load-balancer-controller-78f7564788-4gqsw        2m           21Mi            
+kube-system   aws-load-balancer-controller-78f7564788-sw45v        1m           19Mi            
+kube-system   aws-node-4kqlh                                       3m           54Mi            
+kube-system   aws-node-klhwc                                       3m           57Mi            
+kube-system   aws-node-p5fql                                       3m           54Mi            
+kube-system   aws-node-zq9x9                                       3m           55Mi            
+kube-system   coredns-5d849c4789-dr8j8                             2m           13Mi            
+kube-system   coredns-5d849c4789-p9zpw                             2m           13Mi            
+kube-system   kube-proxy-5mhvx                                     2m           12Mi            
+kube-system   kube-proxy-5zq8j                                     1m           12Mi            
+kube-system   kube-proxy-nztmq                                     2m           12Mi            
+kube-system   kube-proxy-t9g9x                                     2m           12Mi            
+kube-system   metrics-server-db4f45b97-smg9w                       6m           16Mi            
+```
+
+Nodes:
+```
+NAME                         CPU(cores)   CPU(%)   MEMORY(bytes)   MEMORY(%)   
+ip-10-0-3-14.ec2.internal    21m          1%       490Mi           14%         
+ip-10-0-3-157.ec2.internal   30m          1%       576Mi           17%         
+ip-10-0-4-130.ec2.internal   25m          1%       497Mi           15%         
+ip-10-0-4-95.ec2.internal    34m          1%       458Mi           13%         
+```
 
 # Situações que impactaram no tempo da entrega:
 1 - Implementações via Helm, conflito de versões das implementações dos Charts via IaC Terraform.
@@ -33,6 +77,15 @@ Detalhe sobe instância t3.medium (padrão na subida do cluster):
 8m13s       Normal    UpdatedLoadBalancer       service/prometheus-server                                 Updated load balancer with new hosts
 3m4s        Normal    FailedBinding             persistentvolumeclaim/storage-prometheus-alertmanager-0   no persistent volumes available for this claim and no storage class is set
 ```
+
+Na descrição do service via Helm, essas eram as classes configuradas:
+```
+kubectl describe pvc prometheus-server
+               volume.beta.kubernetes.io/storage-provisioner: ebs.csi.eks.amazonaws.com
+               volume.kubernetes.io/selected-node: ip-10-0-3-99.ec2.internal
+               volume.kubernetes.io/storage-provisioner: ebs.csi.eks.amazonaws.com
+```
+Obs.: Lembrando que em uma implementação de volumes no kubernetes, primeiramente definimo a StorageClass (sc), na sequência o PersistentVolume (pv), e finalmente o PersistentVolumeClaim (pvc).
 
 2 - Implementações via artefatos do Kubernetes (yaml), falta de implementações CRD no cluster EKS.
 Saídas das implementações:
