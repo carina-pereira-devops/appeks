@@ -8,6 +8,7 @@ COPY ./app /app
 
 # Instalando dependências
 COPY requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Expondo porta da aplicação
 EXPOSE 8000
