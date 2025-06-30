@@ -7,7 +7,7 @@ spec:
  project: default
  source:
    repoURL: 'https://github.com/carina-pereira-devops/appeks'
-   targetRevision: HEAD
+   targetRevision: main
    path: 'app_values'
  destination:
    server: 'https://kubernetes.default.svc'
@@ -18,3 +18,13 @@ spec:
      selfHeal: true
    syncOptions:
    - CreateNamespace=true
+
+# Configuração manual do Argo, testar:
+#project: default
+#source:
+#  repoURL: https://github.com/carina-pereira-devops/appeks
+#  path: app_values
+#  targetRevision: main
+#destination:
+#  server: https://kubernetes.default.svc
+#  namespace: app
