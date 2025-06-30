@@ -309,7 +309,7 @@ iac_eks/
 
 A imagem construída na etapa de CICD, será deploiada em um cluster EKS, no qual também terá as seguintes implementações:
 
-    ./prints/4.png
+    prints/4.png
 
 1 - ArgoCD, tendo o Git como única fonte de verdade. Esta implementação é feita via Helm juntamente com o Terraform, sendo apenas a customização do recurso (argo.yaml) sendo feita manualmente. No mesmo diretório, teremos o artefato para a implementação da aplicação explanada na primeira etapa.
 
@@ -322,13 +322,13 @@ app_values/
 
 Abaixo o exemplo de sincronismo entre o Argo e o Git, durante o deploy de uma nova versão da aplicação:
 
-    ./prints/4.png
+    prints/4.png
 
 2 - A implementação do Prometheus Server que será feita via Helm manualmente.
 
 3 - A implementação do Grafana que será feita via Helm manualmente.
 
-    ./prints/8.png
+    prints/8.png
 
 # Validações:
 
@@ -338,11 +338,11 @@ ALB Controller é uma implementação via Helm que gerencia os ALBs.
 
     Quando um service do tipo LoadBalancer do Kubernetes expoẽ uma aplicação, automaticamente um LB é criado, e quando finaliza o LB é encerrado.
 
-    ./prints/1.png
+    prints/1.png
 
 Detalhe sobe instância t3.medium (padrão na subida do cluster):
 
-    ./prints/3.png
+    prints/3.png
 
 Foram coletadas métricas durante os testes, para justificativa de aumento ou redução dos recursos`
 
@@ -393,7 +393,7 @@ ip-10-0-4-95.ec2.internal    34m          1%       458Mi           13%
 
 1 - Implementações via Helm, conflito de versões das implementações dos Charts via IaC Terraform.
 
-    ./prints/7.png
+    prints/7.png
 
     Implementação do Prometheus, necessita de storage de persistência, exemplo de saída de acordo com os Eventos do Cluster:
 
@@ -469,11 +469,11 @@ Autenticação via Role, com acesso aos Workloads do Cluster, mesmo com criaçã
 
 Detalhe das configurações de acesso ao EKS:
 
-    ./prints/6.png
+    prints/6.png
 
 2 - Traefik como ingress do kubernetes, instanciando apenas um LB, configurando as rotas para as demais requisições.
 
-    ./prints/2.png
+    prints/2.png
 
 Exemplo de configuração manual:
 
