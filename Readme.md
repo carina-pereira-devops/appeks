@@ -473,7 +473,7 @@ Detalhe das configurações de acesso ao EKS:
 
 2 - Traefik como ingress do kubernetes, instanciando apenas um LB, configurando as rotas para as demais requisições.
 
-    prints/2.png
+    ![alt imagem](<.prints/2.png>) 
 
 Exemplo de configuração manual:
 
