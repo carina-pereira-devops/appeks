@@ -248,21 +248,78 @@ WORKDIR /app
 CMD cd /app;  python3 api.py 
 ```
 
+Através da pipeline previamente configurada, disponibilizada no diretório padrão do Git .github/workflows, será criada uma imagem a ser armazanada em um repositório no ECR na AWS.
 
-# Sugestões:
-Traefik como ingress do kubernetes, instanciando apenas um LB, configurando as rotas para as demais requisições.
-    ./prints/2.png
-Exemplo de configuração manual:
+# Laboratório - Infra na AWS criada via Terraform
 
-Criação manual do recurso, uma vez que o CRD não está implementando no Cluster:
+Eis a estrutura dos diretórios de acordo com este repositório, onde os recursos serão modularizados.
+
 ```
-kubectl -n prometheus create ingress prometheus --rule="/prometheus=prometheus-service:9090"
+iac_eks/
+├── destroy_config.json
+├── locals.tf
+├── modules
+│   ├── argo
+│   │   └── main.tf
+│   ├── aws-load-balancer-controller
+│   │   ├── data.tf
+│   │   ├── helm.tf
+│   │   ├── iam_policy.json
+│   │   ├── iam.tf
+│   │   ├── locals.tf
+│   │   ├── policy.tf
+│   │   ├── serviceaccount.tf
+│   │   └── variables.tf
+│   ├── cluster
+│   │   ├── cluster.tf
+│   │   ├── iam.tf
+│   │   ├── oidc.tf
+│   │   ├── outputs.tf
+│   │   ├── sg-rule.tf
+│   │   └── variables.tf
+│   ├── managed-node-group
+│   │   ├── eks.tf
+│   │   ├── iam.tf
+│   │   └── variables.tf
+│   ├── network
+│   │   ├── igw.tf
+│   │   ├── ngw.tf
+│   │   ├── output.tf
+│   │   ├── private.tf
+│   │   ├── public.tf
+│   │   ├── region.tf
+│   │   ├── variables.tf
+│   │   └── vpc.tf
+│   └── waf
+│       └── main.tf
+├── modules.tf
+├── provider.tf
+├── terraform.tfvars
+└── variables.tf
 ```
-Anotação para que o recurso seja utilizado:
+
+# Laboratório - Implementações
+
+A imagem construída na etapa de CICD, será deploiada em um cluster EKS, no qual também terá as seguintes implementações:
+    ./prints/4.png
+
+1 - ArgoCD, tendo o Git como única fonte de verdade. Esta implementação é feita via Helm juntamente com o Terraform, sendo apenas a customização do recurso (argo.yaml) sendo feita manualmente. No mesmo diretório, teremos o artefato para a implementação da aplicação explanada na primeira etapa.
+
 ```
-kubectl -n prometheus annotate ingress prometheus kubernetes.io/ingress.class=traefik
+[carina@fedora ekspp]$ tree app_values/
+app_values/
+├── app.yaml
+└── argo.yaml
+
 ```
-Obs.: Embora tenha sido sugerida esta implementação, devido ao tempo disponibilizado, todos os serviços foram expostos através do ALB Controller.
+
+Abaixo o exemplo de sincronismo entre o Argo e o Git, durante o deploy de uma nova versão da aplicação:
+    ./prints/4.png
+
+2 - A implementação do Prometheus Server que será feita via Helm manualmente.
+
+3 - A implementação do Grafana que será feita via Helm manualmente.
+    ./prints/8.png
 
 # Validações:
 ALB Controller é uma implementação via Helm que gerencia os ALBs.
@@ -318,6 +375,9 @@ ip-10-0-4-95.ec2.internal    34m          1%       458Mi           13%
 
 # Situações que impactaram no tempo da entrega:
 1 - Implementações via Helm, conflito de versões das implementações dos Charts via IaC Terraform.
+
+    ./prints/7.png
+
     Implementação do Prometheus, necessita de storage de persistência, exemplo de saída de acordo com os Eventos do Cluster:
 ```
 3m4s        Normal    FailedBinding             persistentvolumeclaim/prometheus-server                   no persistent volumes available for this claim and no storage class is set
@@ -359,29 +419,47 @@ targetgroupbindings.elbv2.k8s.aws            2025-06-28T21:42:37Z
 ```
 
 # Questionamentos:
-Quais boas práticas para o Código IaC:
+1 - Quais boas práticas para o Código IaC:
     Implementações via Terraform
     Implementações via Helm
     Implementações via artefatos
     Implementações via Ansible
 
-Como instalar crd, como exemplo networking.k8s.io/v1?
+2 - Como instalar crd, como exemplo networking.k8s.io/v1?
 
 # Melhorias futuras:
-Autenticação via Role, mesmo para IaC via Github Actions.
+1 - Autenticação via Role, mesmo para IaC via Github Actions.
 Saída na tentativa da conexão com o cluster criado recentemente via CiCd:
+```
 "Unhandled Error" err="couldn't get current server API group list: the server has asked for the client to provide credentials"
-
+```
 Autenticação via Role, com acesso aos Workloads do Cluster, mesmo com criação via Github Actions.
 
-Monitoramento Opentelemetry:
+Detalhe das configurações de acesso ao EKS:
+    ./prints/6.png
+
+2 - Traefik como ingress do kubernetes, instanciando apenas um LB, configurando as rotas para as demais requisições.
+    ./prints/2.png
+Exemplo de configuração manual:
+
+Criação manual do recurso, uma vez que o CRD não está implementando no Cluster:
+```
+kubectl -n prometheus create ingress prometheus --rule="/prometheus=prometheus-service:9090"
+```
+Anotação para que o recurso seja utilizado:
+```
+kubectl -n prometheus annotate ingress prometheus kubernetes.io/ingress.class=traefik
+```
+Obs.: Embora tenha sido sugerida esta implementação, devido ao tempo disponibilizado, todos os serviços foram expostos através do ALB Controller.
+
+3 - Monitoramento Opentelemetry:
 Web store: http://localhost:8080/
 Grafana: http://localhost:8080/grafana/
 Load Generator UI: http://localhost:8080/loadgen/
 Jaeger UI: http://localhost:8080/jaeger/ui/
 Flagd configurator UI: http://localhost:8080/feature
 
-# Referências utilizadas para a construção deste Laboratório:
+# Referências utilizadas na construção deste Laboratório:
 Terraform para AWS, Mateus Muller (Udemy)
 https://spacelift.io/blog/argocd-terraform
 https://medium.com/@habbema/monitorando-aplica%C3%A7%C3%B5es-python-com-prometheus-e-grafana-020a69ffafa8
