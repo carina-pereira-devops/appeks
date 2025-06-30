@@ -457,12 +457,9 @@ Autenticação via Role, com acesso aos Workloads do Cluster, mesmo com criaçã
 
 Detalhe das configurações de acesso ao EKS: <img src="https://github.com/carina-pereira-devops/appeks/blob/099aed66c15aedf9cfd5420dac1c9b93c76dcb00/prints/6.png" alt="Acesso">
 
-2 - Traefik como ingress do kubernetes, instanciando apenas um LB, configurando as rotas para as demais requisições.
-
-    ![alt imagem](<.prints/2.png>) 
+2 - Traefik como ingress do kubernetes, instanciando apenas um LB, configurando as rotas para as demais requisições. <img src="https://github.com/carina-pereira-devops/appeks/blob/caf887d81889a363612bb5315ee33d9186550a75/prints/2.png" alt="Traefik">
 
 Exemplo de configuração manual:
-
 
 Criação manual do recurso, uma vez que o CRD não está implementando no Cluster:
 
@@ -476,7 +473,7 @@ Anotação para que o recurso seja utilizado:
 kubectl -n prometheus annotate ingress prometheus kubernetes.io/ingress.class=traefik
 ```
 
-Obs.: Embora tenha sido sugerida esta implementação, devido ao tempo disponibilizado, todos os serviços foram expostos através do ALB Controller.
+Obs.: Embora tenha sido sugerida esta implementação, devido ao tempo disponibilizado, os serviços principais foram expostos através do ALB Controller.
 
 3 - Monitoramento Opentelemetry:
 
