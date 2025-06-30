@@ -344,7 +344,7 @@ Detalhe sobe instância t3.medium (padrão na subida do cluster):
 
     prints/3.png
 
-Foram coletadas métricas durante os testes, para justificativa de aumento ou redução dos recursos`
+Foram coletadas métricas durante os testes, para justificativa de aumento ou redução dos recursos
 
 Pods:
 
