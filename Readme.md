@@ -334,7 +334,7 @@ Quando um service do tipo LoadBalancer do Kubernetes expoẽ uma aplicação, au
 
 Detalhe sobe instância t3.medium (padrão na subida do cluster): <img src="https://github.com/carina-pereira-devops/appeks/blob/099aed66c15aedf9cfd5420dac1c9b93c76dcb00/prints/3.png" alt="T3">
 
-Foram coletadas métricas durante os testes, para justificativa de aumento ou redução dos recursos
+Foram coletadas métricas durante os testes, para justificativa de aumento ou redução dos recursos do cluster:
 
 Pods:
 
