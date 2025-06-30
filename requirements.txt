@@ -6,4 +6,4 @@ Jinja2==2.11.2
 MarkupSafe==1.1.1
 Werkzeug==1.0.1
 prometheus-client==0.21.1
-curl==7.68.0
+curl
