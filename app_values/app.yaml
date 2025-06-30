@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: python
-        image: 535002861869.dkr.ecr.us-east-1.amazonaws.com/dvps:20250630013702
+        image: 535002861869.dkr.ecr.us-east-1.amazonaws.com/dvps:20250630013702 # Tag da aplicação
         ports:
         - containerPort: 8000
 
@@ -35,9 +35,9 @@ spec:
   ports:
     - protocol: TCP
       port: 8000
-      targetPort: 8000
+      targetPort: 8000 # porta da aplicação
       name: app
     - protocol: TCP
       port: 7000
-      targetPort: 7000
+      targetPort: 7000 # porta para a coleta de métricas
       name: metricas

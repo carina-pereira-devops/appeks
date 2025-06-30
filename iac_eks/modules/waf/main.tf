@@ -1,3 +1,4 @@
+# Regra de bloqueio de IPs
 resource "aws_wafv2_ip_set" "ip_blacklist" {
   name               = "ip-address"
   scope              = "REGIONAL"

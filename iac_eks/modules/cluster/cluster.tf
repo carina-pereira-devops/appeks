@@ -26,6 +26,7 @@ resource "aws_eks_cluster" "eks_cluster" {
   )
 }
 
+# Criação do Namespace para aplicações
 resource "kubernetes_namespace" "app" {
   metadata {
     name = "app"

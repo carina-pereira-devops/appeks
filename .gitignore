@@ -9,8 +9,8 @@
 *.tfstate
 *.tfstate.*
 
-# Variáveis
-*.tfvars
+# Variáveis (necessário para esse laboratório)
+# *.tfvars
 
 # Arquivos diversos
 crash.log
@@ -22,5 +22,5 @@ Notas.txt
 
 *.png
 
-./assets
+./imagens
 ./recursos

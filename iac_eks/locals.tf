@@ -7,4 +7,4 @@ locals {
     }
 }
 
-# Validar se os recursos vão ser criados com essas Tags
+# Validação ok, recursos vão ser criados com essas Tags

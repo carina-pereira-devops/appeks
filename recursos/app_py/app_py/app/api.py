@@ -1,16 +1,14 @@
 from flask import Flask
 from flask import jsonify
 from flask import request
-# instrumentação
-from prometheus_client import start_http_server, Counter
-import random
-import time
+
 
 app_name = 'comentarios'
 app = Flask(app_name)
 app.debug = True
 
 comments = {}
+
 
 @app.route('/api/comment/new', methods=['POST'])
 def api_comment_new():
@@ -51,18 +49,3 @@ def api_comment_list(content_id):
                 'message': message,
                 }
         return jsonify(response), 404
-    
-# Criação de uma métrica do tipo contador
-REQUEST_COUNT = Counter('app_requests_total',
-                             'Total de requisições processadas')
-def process_request():
-    """Simula o processamento de uma requisição"""
-    REQUEST_COUNT.inc()  # Incrementa o contador para cada requisição
-    time.sleep(random.random())  # Simula o tempo de processamento
-if __name__ == '__main__':
-    start_http_server(7000)
-    print("Servidor de métricas iniciado na porta 8000")
-    
-    # Simula um loop contínuo de processamento de requisições
-    while True:
-        process_request()

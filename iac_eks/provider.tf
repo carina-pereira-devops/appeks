@@ -36,7 +36,6 @@ provider "kubernetes" {
   }
 }
 
-
 provider "helm" {
   kubernetes {
     host                   = module.eks_cluster.endpoint
