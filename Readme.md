@@ -259,7 +259,7 @@ Através da pipeline previamente configurada, disponibilizada no diretório padr
 
 # Laboratório - Infra na AWS criada via Terraform
 
-Eis a estrutura dos diretórios de acordo com este repositório, onde os recursos serão modularizados.
+Estrutura dos diretórios de acordo com este repositório, onde os recursos serão modularizados.
 
 ```
 iac_eks/
@@ -326,17 +326,13 @@ Abaixo o exemplo de sincronismo entre o Argo e o Git, durante o deploy de uma no
 
 # Validações:
 
-ALB Controller é uma implementação via Helm que gerencia os ALBs.
+ALB Controller é uma implementação via Helm que gerencia os ALBs. 
 
-    Semelhante ao Protocolo Arp que atua na camada 2,5 traduzindo Ip para MAC.
+Semelhante ao Protocolo Arp que atua na camada 2,5 traduzindo Ip para MAC.
 
-    Quando um service do tipo LoadBalancer do Kubernetes expoẽ uma aplicação, automaticamente um LB é criado, e quando finaliza o LB é encerrado.
-    
-    <img src="https://github.com/carina-pereira-devops/appeks/blob/f612b311df911dd5f4fed51eb5a7d5c3c7089810/prints/1.png" alt="ALB">
+Quando um service do tipo LoadBalancer do Kubernetes expoẽ uma aplicação, automaticamente um LB é criado, e quando finaliza o LB é encerrado. <img src="ttps://github.com/carina-pereira-devops/appeks/blob/099aed66c15aedf9cfd5420dac1c9b93c76dcb00/prints/1.png" alt="ALB">
 
-Detalhe sobe instância t3.medium (padrão na subida do cluster):
-
-    prints/3.png
+Detalhe sobe instância t3.medium (padrão na subida do cluster): <img src="https://github.com/carina-pereira-devops/appeks/blob/099aed66c15aedf9cfd5420dac1c9b93c76dcb00/prints/3.png" alt="T3">
 
 Foram coletadas métricas durante os testes, para justificativa de aumento ou redução dos recursos
 
@@ -385,11 +381,9 @@ ip-10-0-4-95.ec2.internal    34m          1%       458Mi           13%
 
 # Situações que impactaram no tempo da entrega:
 
-1 - Implementações via Helm, conflito de versões das implementações dos Charts via IaC Terraform.
+1 - Implementações via Helm, conflito de versões das implementações dos Charts via IaC Terraform.<img src="https://github.com/carina-pereira-devops/appeks/blob/099aed66c15aedf9cfd5420dac1c9b93c76dcb00/prints/7.png" alt="Erro">
 
-    prints/7.png
-
-    Implementação do Prometheus, necessita de storage de persistência, exemplo de saída de acordo com os Eventos do Cluster:
+Implementação do Prometheus, necessita de storage de persistência, exemplo de saída de acordo com os Eventos do Cluster:
 
 ```
 3m4s        Normal    FailedBinding             persistentvolumeclaim/prometheus-server                   no persistent volumes available for this claim and no storage class is set
@@ -461,9 +455,7 @@ Saída na tentativa da conexão com o cluster criado recentemente via CiCd:
 
 Autenticação via Role, com acesso aos Workloads do Cluster, mesmo com criação via Github Actions.
 
-Detalhe das configurações de acesso ao EKS:
-
-    prints/6.png
+Detalhe das configurações de acesso ao EKS: <img src="https://github.com/carina-pereira-devops/appeks/blob/099aed66c15aedf9cfd5420dac1c9b93c76dcb00/prints/6.png" alt="Acesso">
 
 2 - Traefik como ingress do kubernetes, instanciando apenas um LB, configurando as rotas para as demais requisições.
 
