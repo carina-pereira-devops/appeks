@@ -307,6 +307,12 @@ iac_eks/
 └── variables.tf
 ```
 
+Os custos com os testes e resolução de problemas (tshoot) durante os testes são satisfatórios.
+
+12
+
+Importante lembrar também a importância da escolha de recursos. Na imagem acima, notamos que os custos com as instâncias EC2 (nodes que hospedam os Pods) são relevantes. Por isso desde o ínício do Laboratório mensuramos a utilização de CPU/Memória dos Pods, para que os mesmos fossem executados com folga, porém sem desperdícios.
+
 # Laboratório - Implementações
 
 A imagem construída na etapa de CICD, será deploiada em um cluster EKS, no qual também terá as seguintes implementações:
@@ -324,7 +330,166 @@ Abaixo o exemplo de sincronismo entre o Argo e o Git, durante o deploy de uma no
 
 2 - A implementação do Prometheus Server que será feita via Helm manualmente.
 
+9
+
+O Grafana criará as Dashs com as métricas envidas pelo Prometheus:
+
+10
+
 3 - A implementação do Grafana que será feita via Helm manualmente. <img src="https://github.com/carina-pereira-devops/appeks/blob/5187a309ae2575295dd71ab67dee32e64ef3ee8f/prints/8.png" alt="Grafana">
+
+O resultado esperado será a análise do comportamento da aplicação, a medida que a mesma recebe as requisições:
+
+11
+
+# Execuções manuais (futuras automações)
+
+```
+1 - Criação da Infra via IaC
+
+2 - Construção da imagem da aplicação IaC
+
+Atualizando context do cluster:
+aws eks update-kubeconfig --region us-east-1 --name ekspp-cluster
+kubectl config use-context  arn:aws:eks:us-east-1:535002861869:cluster/ekspp-cluster
+
+Validação:
+kubectl get po -A
+kubectl get no
+
+Alias:
+alias k='kubectl'
+
+Deploy manual da aplicação:
+kubectl apply -f app_values/app.yaml
+
+Credenciais do Argo para configuração do Projeto
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath={.data.password} | base64 -d
+
+Apenas exemplos (não são as credenciais atuais):
+admin 
+cbJidwERE1rGrH7m
+
+Endpoint do service para acesso ao Argo:
+kubectl -n argocd get svc
+
+Informações solicitadas:
+Repo:
+https://github.com/carina-pereira-devops/appeks
+Path:
+app_values
+Branch:
+main 
+Nome da aplicação
+python
+Namespace
+app 
+
+Obs.: Caso a aplicação não esteja operacional o projeto no Argo não é criado.
+
+Endpoint da aplicação:
+kubectl get svc -n app
+NAME             TYPE           CLUSTER-IP      EXTERNAL-IP                                                               PORT(S)                         AGE
+python-service   LoadBalancer   172.20.91.248   aca1723546f354b6d8896916d01ce0fd-1707209365.us-east-1.elb.amazonaws.com   8000:32616/TCP,7000:32515/TCP   19m
+
+Requisições:
+# matéria 1
+curl -sv <endpoint>:8000 -X POST -H 'Content-Type: application/json' -d '{"email":"alice@example.com","comment":"first post!","content_id":1}'
+curl -sv <endpoint>:8000 -X POST -H 'Content-Type: application/json' -d '{"email":"alice@example.com","comment":"ok, now I am gonna say something more useful","content_id":1}'
+curl -sv <endpoint>:8000 -X POST -H 'Content-Type: application/json' -d '{"email":"bob@example.com","comment":"I agree","content_id":1}'
+# matéria 2
+curl -sv <endpoint>:8000/api/comment/new -X POST -H 'Content-Type: application/json' -d '{"email":"bob@example.com","comment":"I guess this is a good thing","content_id":2}'
+curl -sv <endpoint>:8000/api/comment/new -X POST -H 'Content-Type: application/json' -d '{"email":"charlie@example.com","comment":"Indeed, dear Bob, I believe so as well","content_id":2}'
+curl -sv <endpoint>:8000/api/comment/new -X POST -H 'Content-Type: application/json' -d '{"email":"eve@example.com","comment":"Nah, you both are wrong","content_id":2}'
+# listagem matéria 1
+curl -sv <endpoint>:8000/api/comment/list/1
+# listagem matéria 2
+curl -sv <endpoint>:8000/api/comment/list/2
+
+Forçando parada da aplicação para validação das requisições:
+kubectl -n app delete po python-59c697dfdf-bw8sg --force --grace-period 0
+
+Não há execução na saida:
+curl -sv aca1723546f354b6d8896916d01ce0fd-1707209365.us-east-1.elb.amazonaws.com:8000/api/comment/list/1
+* Host aca1723546f354b6d8896916d01ce0fd-1707209365.us-east-1.elb.amazonaws.com:8000 was resolved.
+* IPv6: (none)
+* IPv4: 54.210.178.46, 50.16.221.30
+*   Trying 54.210.178.46:8000...
+
+Instalação do curl no Pod/Container da aplicação:
+kubectl -n app exec -ti  python-68796f44c7-hldh6 -- /bin/bash
+
+Execução no Pod/Container:
+apt install curl 
+
+Validação:
+kubectl -n app exec  python-68796f44c7-hldh6 -- curl http://localhost:7000/metrics
+
+Instalação para coleta de Métricas do Cluster, a medida que os recursos são implementados:
+kubectl apply -f recursos/metrics.yaml
+
+Instalação do prometheus via linha de comando:
+helm install prometheus prometheus-community/kube-prometheus-stack --namespace app
+
+Obs.: Validação é feita consultando todos os Pods com a label que referencia o deploy do Prometheus.
+
+kubectl --namespace app get pods -l "release=prometheus"
+NAME                                                   READY   STATUS    RESTARTS   AGE
+prometheus-kube-prometheus-operator-54c9b77c65-8nlcw   1/1     Running   0          2m51s
+prometheus-kube-state-metrics-7f5f75c85d-5wrp4         1/1     Running   0          2m51s
+prometheus-prometheus-node-exporter-nsf6f              1/1     Running   0          2m51s
+prometheus-prometheus-node-exporter-wdg7f              1/1     Running   0          2m51s
+
+Na instalação da pilha do Prometheus, já vem a implementação do Grafana.
+
+Apenas validar se é a credencial padrão:
+kubectl --namespace app get secrets prometheus-grafana -o jsonpath="{.data.admin-password}" | base64 -d ; echo
+
+Apenas exemplos (não são as credenciais atuais):
+admin
+prom-operator
+
+A implementação sugere o port-forward (requer conhecimento de Kubernetes para entendimento de como e qual serviço será exposto):
+export POD_NAME=$(kubectl --namespace app get pod -l "app.kubernetes.io/name=grafana,app.kubernetes.io/instance=prometheus" -oname)
+kubectl --namespace app port-forward $POD_NAME 3000
+
+Porém será feita a edição do service e a alteração do ClusterIp para LoadBalancer, para acesso no navegador:
+kubectl -n app edit svc grafana
+service/grafana edited
+
+Obs.: A título de informação caso fosse necessário expor a aplicação via linha de comando:
+kubectl expose deployment grafana --type=LoadBalancer --port=80 --name=grafana
+kubectl expose deployment <nome_do_deployment> --type=LoadBalancer --port=<porta_de_exposição> --name=<nome_do_serviço>
+
+O Grafana criará as Dashs de acordo com as métricas envidas pelo Prometheus.
+
+Para que o Prometheus envie as métricas se faz necessário algumas configurações:
+
+1 - Configurar o prometheus para receber as métricas do endpoint através do arquivo:
+/etc/prometheus/prometheus.yml
+
+2 - Configurar Prometheus para coletar métricas do Cluster.
+
+Porém como não conseguimos alterar as configurações que já vem no container, a configuração será feita através:
+1 - Configuração de acesso RBAC através do arquivo recursos/clusterRole.yaml:
+[carina@fedora ekspp]$ kubectl apply -f recursos/clusterRole.yaml 
+clusterrole.rbac.authorization.k8s.io/prometheus created
+clusterrolebinding.rbac.authorization.k8s.io/prometheus created
+
+2 - Customização das consfigurações através de um ConfigMap localizado em recursos/cm.yaml:
+[carina@fedora ekspp]$ kubectl apply -f recursos/cm.yaml 
+configmap/prometheus-server-conf created
+
+3 - Uma nova implementação do prometheus-server, localizado em recursos/deploy.yaml:
+[carina@fedora ekspp]$ kubectl apply -f recursos/deploy.yaml 
+deployment.apps/prometheus-deployment created
+
+Obs.: No item 3 faremos a configuração para exportar as métricas que coletamos com a biblioteca prometheus_client, da aplicação em python.
+
+Edição do service e a alteração do ClusterIp para LoadBalancer, para acesso no navegador:
+kubectl -n app edit svc prometheus-kube-prometheus-prometheus
+service/prometheus-kube-prometheus-prometheus edited
+```
 
 # Validações:
 
@@ -461,7 +626,9 @@ Detalhe das configurações de acesso ao EKS: <img src="https://github.com/carin
 
 2 - Traefik como ingress do kubernetes, instanciando apenas um LB, configurando as rotas para as demais requisições. <img src="https://github.com/carina-pereira-devops/appeks/blob/caf887d81889a363612bb5315ee33d9186550a75/prints/2.png" alt="Traefik">
 
-Exemplo de configuração manual:
+A implementação e configuração prévia do Traefik, eliminará a exposição manual dos serviços.
+
+Obs.: Exemplo de configuração manual:
 
 Criação manual do recurso, uma vez que o CRD não está implementando no Cluster:
 
@@ -489,6 +656,8 @@ Jaeger UI: http://localhost:8080/jaeger/ui/
 
 Flagd configurator UI: http://localhost:8080/feature
 
+4 - Script shell para as etapas manuais da aplicação.
+
 # Referências utilizadas na construção deste Laboratório:
 Terraform para AWS, Mateus Muller (Udemy)
 
@@ -497,3 +666,10 @@ https://spacelift.io/blog/argocd-terraform
 https://medium.com/@habbema/monitorando-aplica%C3%A7%C3%B5es-python-com-prometheus-e-grafana-020a69ffafa8
 
 https://medium.com/@abubakr.sadiq/integrating-prometheus-and-grafana-with-a-running-eks-cluster-a-step-by-step-guide-98a0d094fd85
+
+https://devopscube.com/setup-prometheus-monitoring-on-kubernetes
+
+https://github.com/techiescamp/kubernetes-prometheus
+
+Sugestão para formatação de Markdown: https://stackedit.io/app#
+
