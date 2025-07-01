@@ -661,8 +661,6 @@ https://spacelift.io/blog/argocd-terraform
 
 https://medium.com/@habbema/monitorando-aplica%C3%A7%C3%B5es-python-com-prometheus-e-grafana-020a69ffafa8
 
-https://medium.com/@abubakr.sadiq/integrating-prometheus-and-grafana-with-a-running-eks-cluster-a-step-by-step-guide-98a0d094fd85
-
 https://devopscube.com/setup-prometheus-monitoring-on-kubernetes
 
 https://github.com/techiescamp/kubernetes-prometheus
