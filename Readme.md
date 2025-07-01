@@ -330,6 +330,8 @@ Abaixo o exemplo de sincronismo entre o Argo e o Git, durante o deploy de uma no
 
 2 - A implementação do Prometheus Server que será feita via Helm manualmente. <img src="https://github.com/carina-pereira-devops/appeks/blob/cbd88f8ce0d5f0fdcbcc04b65c7022e47b5e137a/prints/9.png" alt="Prometheus">
 
+Obs.: Será feita a configuração no ConfigMap customizado das configurações do Prometheus, para que o mesmo receba as métricas que coletamos na porta 7000 da aplicação, conforme o print: <img src="https://github.com/carina-pereira-devops/appeks/blob/be94c4856e1cb1e455aba4c37872019239a67139/prints/13.png" alt="CM">
+
 O Grafana criará as Dashs com as métricas envidas pelo Prometheus:
 
 <img src="https://github.com/carina-pereira-devops/appeks/blob/cbd88f8ce0d5f0fdcbcc04b65c7022e47b5e137a/prints/10.png" alt="Pr-Gr">
