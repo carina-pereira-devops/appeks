@@ -66,3 +66,5 @@ if __name__ == '__main__':
     # Simula um loop contínuo de processamento de requisições
     while True:
         process_request()
+
+        # teste cicd
