@@ -309,7 +309,7 @@ iac_eks/
 
 Os custos com os testes e resolução de problemas (tshoot) durante os testes são satisfatórios.
 
-12
+<img src="https://github.com/carina-pereira-devops/appeks/blob/cbd88f8ce0d5f0fdcbcc04b65c7022e47b5e137a/prints/12.png" alt="AWS">
 
 Importante lembrar também a importância da escolha de recursos. Na imagem acima, notamos que os custos com as instâncias EC2 (nodes que hospedam os Pods) são relevantes. Por isso desde o ínício do Laboratório mensuramos a utilização de CPU/Memória dos Pods, para que os mesmos fossem executados com folga, porém sem desperdícios.
 
@@ -328,19 +328,15 @@ app_values/
 
 Abaixo o exemplo de sincronismo entre o Argo e o Git, durante o deploy de uma nova versão da aplicação: <img src="https://github.com/carina-pereira-devops/appeks/blob/4462cc0fdd9b533129da2abdfddf258e9ea436e3/prints/4.png" alt="Argo">
 
-2 - A implementação do Prometheus Server que será feita via Helm manualmente.
-
-9
+2 - A implementação do Prometheus Server que será feita via Helm manualmente. <img src="https://github.com/carina-pereira-devops/appeks/blob/cbd88f8ce0d5f0fdcbcc04b65c7022e47b5e137a/prints/9.png" alt="Prometheus">
 
 O Grafana criará as Dashs com as métricas envidas pelo Prometheus:
 
-10
+<img src="https://github.com/carina-pereira-devops/appeks/blob/cbd88f8ce0d5f0fdcbcc04b65c7022e47b5e137a/prints/10.png" alt="Pr-Gr">
 
 3 - A implementação do Grafana que será feita via Helm manualmente. <img src="https://github.com/carina-pereira-devops/appeks/blob/5187a309ae2575295dd71ab67dee32e64ef3ee8f/prints/8.png" alt="Grafana">
 
-O resultado esperado será a análise do comportamento da aplicação, a medida que a mesma recebe as requisições:
-
-11
+O resultado esperado será a análise do comportamento da aplicação, a medida que a mesma recebe as requisições:<img src="https://github.com/carina-pereira-devops/appeks/blob/cbd88f8ce0d5f0fdcbcc04b65c7022e47b5e137a/prints/11.png" alt="Dash">
 
 # Execuções manuais (futuras automações)
 
