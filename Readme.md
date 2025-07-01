@@ -454,6 +454,7 @@ kubectl --namespace app port-forward $POD_NAME 3000
 Porém será feita a edição do service e a alteração do ClusterIp para LoadBalancer, para acesso no navegador:
 kubectl -n app edit svc grafana
 service/grafana edited
+Obs.: informar o endpoint no CM do Prometheus
 
 Obs.: A título de informação caso fosse necessário expor a aplicação via linha de comando:
 kubectl expose deployment grafana --type=LoadBalancer --port=80 --name=grafana
@@ -487,6 +488,7 @@ Obs.: No item 3 faremos a configuração para exportar as métricas que coletamo
 Edição do service e a alteração do ClusterIp para LoadBalancer, para acesso no navegador:
 kubectl -n app edit svc prometheus-kube-prometheus-prometheus
 service/prometheus-kube-prometheus-prometheus edited
+Obs.: informar o endpoint no CM do Prometheus
 ```
 
 # Validações:
