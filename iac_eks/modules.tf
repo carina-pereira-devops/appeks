@@ -32,18 +32,7 @@ module "eks_aws_load_balancer_controller" {
   vpc_id       = module.eks_network.vpc_id
 }
 
-module "waf" {
-  source       = "./modules/waf"
+module "estrutura" {
+  source       = "./modules/estrutura"
 }
 
-module "argo" {
-  source       = "./modules/argo"
-}
-
-module "prometheus" {
-  source       = "./modules/prometheus"
-}
-
-module "grafana" {
-  source       = "./modules/grafana"
-}
