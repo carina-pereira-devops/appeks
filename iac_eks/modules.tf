@@ -39,3 +39,11 @@ module "waf" {
 module "argo" {
   source       = "./modules/argo"
 }
+
+module "prometheus" {
+  source       = "./modules/prometheus"
+}
+
+module "grafana" {
+  source       = "./modules/grafana"
+}

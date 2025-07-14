@@ -32,10 +32,10 @@ data:
     scrape_configs:
       - job_name: 'prometheus'
         static_configs:
-          - targets: ['aa452117f74c84f4fbe8973b4f2604cd-1254397000.us-east-1.elb.amazonaws.com:9090'] # LB prometheus 
+          - targets: [' '] # LB prometheus 
       - job_name: 'python' 
         static_configs:
-          - targets: ['localhosta9a1e45cc06324d558b534fe1f89f176-2107458194.us-east-1.elb.amazonaws.com:7000'] # LB app      
+          - targets: ['a96846564ed7946d3a2c36d2a1f8d93b-808577346.us-east-1.elb.amazonaws.com:7000'] # LB app      
       - job_name: 'python'
         kubernetes_sd_configs:
         - role: service
