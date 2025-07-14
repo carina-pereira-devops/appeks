@@ -6,15 +6,15 @@ resource "helm_release" "prometheus" {
 
  create_namespace = true
 
- set {
-   name  = "server.service.type"
-   value = "LoadBalancer"
- }
+# set {
+#   name  = "server.service.type"
+#   value = "LoadBalancer"
+# }
 
- set {
-   name  = "server.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-type"
-   value = "nlb"
- }
+# set {
+#   name  = "server.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-type"
+#   value = "nlb"
+# }
    values = [
     yamlencode(var.settings_prometheus)
   ]
