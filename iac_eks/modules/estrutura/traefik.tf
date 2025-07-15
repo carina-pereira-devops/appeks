@@ -14,7 +14,6 @@ resource "helm_release" "traefik" {
    name  = "server.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-type"
    value = "alb"
  }
-
 }
 
  data "kubernetes_service" "traefik_server" {
@@ -22,6 +21,6 @@ resource "helm_release" "traefik" {
    name      = "traefik-server"
    namespace = helm_release.traefik.namespace
  }
- }
+}
 
 
