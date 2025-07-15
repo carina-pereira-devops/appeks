@@ -1,0 +1,16 @@
+   ingressClass:
+     enabled: true
+     isDefaultClass: true
+   providers:
+     kubernetesCRD:
+       enabled: true
+     kubernetesIngress:
+       enabled: true
+   ports:
+     web:
+       redirectTo: web
+     websecure:
+       tls:
+         enabled: false
+   dashboard:
+     enabled: true
