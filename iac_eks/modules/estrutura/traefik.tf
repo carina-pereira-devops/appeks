@@ -4,6 +4,7 @@ resource "helm_release" "traefik" {
   repository       = "https://traefik.github.io/charts"
   chart            = "traefik"
   create_namespace = true
+  values    = ["${file("traefik_values.yaml")}"]  
 
  set {
    name  = "server.service.type"
@@ -14,6 +15,11 @@ resource "helm_release" "traefik" {
    name  = "server.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-type"
    value = "alb"
  }
+
+   set {
+    name  = "ingressClass.isDefaultClass"
+    value = "true"
+  }
 }
 
  data "kubernetes_service" "traefik_server" {
