@@ -32,7 +32,4 @@ module "eks_aws_load_balancer_controller" {
   vpc_id       = module.eks_network.vpc_id
 }
 
-module "traefik" {
-  source       = "./modules/traefik"
-}
 
