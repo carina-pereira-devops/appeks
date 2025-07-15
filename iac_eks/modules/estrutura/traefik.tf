@@ -4,7 +4,7 @@ resource "helm_release" "traefik" {
   repository       = "https://traefik.github.io/charts"
   chart            = "traefik"
   create_namespace = true
-  values           = "traefik_values.yaml"
+  values           = ["${file("${path.module}/traefik_values.yaml")}"]
 
  set {
    name  = "server.service.type"
