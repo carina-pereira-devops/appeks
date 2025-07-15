@@ -32,7 +32,7 @@ module "eks_aws_load_balancer_controller" {
   vpc_id       = module.eks_network.vpc_id
 }
 
-module "estrutura" {
-  source       = "./modules/estrutura"
+module "traefik" {
+  source       = "./modules/traefik"
 }
 
