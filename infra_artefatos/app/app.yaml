@@ -18,8 +18,8 @@ spec:
       containers:
       - name: python
         image: 535002861869.dkr.ecr.us-east-1.amazonaws.com/dvps:20250701183848
-        ports:
-        - containerPort: 8000
+#        ports:
+#        - containerPort: 8000
 
 ---
 
@@ -40,26 +40,6 @@ spec:
     - protocol: TCP
       port: 7000
       targetPort: 7000 # porta para a coleta de métricas
-      name: metricas
+      name: metrics
 
----
 
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: python-ing
-  namespace: app
-  annotations:
-    kubernetes.io/ingress.class: traefik
-spec:
-  rules:
-  - http:
-      paths:
-      - path: /app
-        backend:
-          serviceName: python-service
-          servicePort: 8000
-      - path: /metrics
-        backend:
-          serviceName: python-service
-          servicePort: 7000

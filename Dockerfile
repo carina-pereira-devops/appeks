@@ -13,6 +13,9 @@ RUN pip install --no-cache-dir -r /tmp/requirements.txt
 # Expondo porta da aplicação
 EXPOSE 8000
 
+# Expondo porta para a coleta de métricas da aplicação
+EXPOSE 7000
+
 # Comando de Inicialização
 WORKDIR /app
 CMD cd /app;  python3 api.py 
