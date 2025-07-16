@@ -1,8 +1,10 @@
-resource "helm_release" "nginx-ingress-controller" {
-  name       = "nginx-ingress-controller"
-  repository = "https://charts.bitnami.com/bitnami"
-  chart      = "nginx-ingress-controller"
-  namespace  = "kube-system"
+resource "helm_release" "ingress-nginx" {
+  name             = "ingress-nginx"
+  repository       = "https://kubernetes.github.io/ingress-nginx"
+  chart            = "ingress-nginx"
+  namespace        = "ingress-nginx"
+  create_namespace = true
+  version          = "4.10.0"
 
   set {
     name  = "service.type"
