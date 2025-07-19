@@ -8,6 +8,7 @@
 # Arquivos de estado
 *.tfstate
 *.tfstate.*
+*.pdf
 
 # Variáveis (necessário para esse laboratório)
 # *.tfvars
