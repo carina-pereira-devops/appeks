@@ -49,7 +49,7 @@ kind: Ingress
 metadata:
   name: python-ing
 spec:
-  ingressClassName: nginx
+  ingressClassName: alb
   rules:
   - http:
       paths:
