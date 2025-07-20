@@ -34,5 +34,4 @@ module "eks_aws_load_balancer_controller" {
 
 module "prometheus" {
   source       = "./modules/prometheus"
-  oidc         = module.eks_cluster.oidc
 }
