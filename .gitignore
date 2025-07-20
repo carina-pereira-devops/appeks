@@ -1,6 +1,9 @@
 # O próprio arquivo do Git
 .gitignore
 
+# VScode
+.vscode
+
 # Diretórios locais do Terraform
 **/.terraform/*
 .terraform.lock.hcl
