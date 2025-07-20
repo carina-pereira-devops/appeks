@@ -4,9 +4,6 @@ resource "helm_release" "prometheus" {
   chart      = "prometheus"
   version    = "23.1.0"
   namespace  = kubernetes_namespace.prometheus-namespace.metadata[0].name
-  depends_on = [
-    kubernetes_service_account.service-account
-  ]
 
   values = [
     "${file("${path.module}/override_values.yaml")}"
@@ -29,18 +26,5 @@ resource "kubernetes_namespace" "prometheus-namespace" {
     }
 
     name = "observability"
-  }
-}
-resource "kubernetes_service_account" "service-account" {
-  metadata {
-    name      = "prometheus"
-    namespace = kubernetes_namespace.prometheus-namespace.metadata[0].name
-    labels = {
-      "app.kubernetes.io/name" = "prometheus"
-    }
-    annotations = {
-      "eks.amazonaws.com/role-arn"               = module.prometheus_role.iam_role_arn
-      "eks.amazonaws.com/sts-regional-endpoints" = "true"
-    }
   }
 }
