@@ -30,6 +30,10 @@ server:
 prometheus-pushgateway:
   enabled: false
 
+alertmanager:
+  create: false
+  enabled: false
+
 ## Configurações Gerais
 prometheus.rules: |-
   groups:

@@ -13,6 +13,7 @@ resource "helm_release" "prometheus" {
    name  = "server.service.type"
    value = "LoadBalancer"
  }
+ 
 }
 
 resource "kubernetes_namespace" "prometheus-namespace" {
